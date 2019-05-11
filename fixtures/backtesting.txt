@@ -1,0 +1,4 @@
+Should always be on the 2014 season of 2426 instances
+homeSSE | awaySSE | commit SHA | descrip
+19203.82 | 21622.43 | NA | just subtracting off the mean
+19895.16 | 21956.6 | f9adc4d75 | extra innings no SB

@@ -1,0 +1,79 @@
+DATE: 03/18/2016
+
+	We tested the logit model against the python model in three categories. These categories included performance in extreme cases, overall reasonability of the data sets, and how well the two models captured global effects. Extreme cases were defined as the cases in which the park factors from the two models differed by the greatest amount. This test was weighted the most heavily, since there were few discernable differences in the other two categories. We took the most extreme cases from each specific hit type, and compared this to a custom-weighted overall composite park factor, as well as using common sense. The park factors used to make the comparison were https://baseballmonster.com/MLBParkFactors.aspx , http://espn.go.com/mlb/stats/parkfactor/_/year/2013 , http://www.fangraphs.com/guts.aspx?type=pfh&teamid=0&season=2014 , and http://www.baseballprospectus.com/sortable/index.php?cid=1605921 , https://rotogrinders.com/pages/ballpark-factors-49556. Baseball monster was weighted the heaviest and rotogrinders and ESPN were weighted the least. Baseball prospectus and fangraphs were weighted in the middle.
+
+	Awarding 1 point to the more accurate model in each extreme case, we found that the pyton model outperformed the logit model for singles, while the logit model outperformed the pyton model in all other hit types. In the extreme cases, the logit model more closely resembled the composite park factor generated from the above sources, the most notable example being Boston away lefty night double pf, which was around 1.25 in both the logit model and the composite score, yet was near 1 in the Beta model. Further, fundamental analysis supported that fenway park should indeed be a favorable park for hitters with respect to doubles.
+
+	Both datasets had higher means and medians for home pf by about the same amount, and both were centered at values very close to 1. It is important to note that after adding in empirical bayes, the logit modelbecame significantly less extreme with respect to singles, and no longer seems to underperform the pyton model.
+
+Below are some notes from when the test was performed. These notes were originally scratchwork, but we figured they may be worth including. The extreme cases were identified by taking the difference between the corresponding python and GLMER park factors. Python larger refers to the extreme cases in which the python park factor is larger, and python smaller refers to the extreme cases in which the python park factor is the smaller of the two. 
+
+NOTE: All of these tests were performed using a weaker regression for the GLMER model than is currently used. This most drastically impacted GLMER single park factors, which became considerably less extreme as a whole. It appears as though GLMER singles now performs roughly as well as pythons single pf.Composite approximation is an approximation of what the park factor should be from the sources listed above. The park factors that are broken down by handedness were given considerably more weighting, and baseballmonster's pfs seemed to the best and was given the largest weighting, while rotogrinders and espn were weighed less heavily.
+
+Performance in some of the extreme cases
+
+Single:
+python larger than GLMER: OAK ALN, CHN ARN
+python smaller than GLMER: COL HRN, COL ARN
+
+composite: OAK ALN-- 1.02
+python 1.02, GLMER .89 
+python +1
+
+composite CHN ARN- 1.01
+python +1
+
+composite COL HRN/ARN is about 1.11, closer to python
+python+1
+
+Generally looking at the data,the GLMER model seems to have more extreme values for its single pfs than python, or any of the sources used to create the composite pf. Again, note that the stronger regression currently utilizes by the GLMER model improves GLMER such that it is no longer outperformed by the python model with respect so singles. They seem roughly equivilant with the new incorperated regression, and many of the most extreme values are now considerably closer to 1.
+
+Double:
+python larger than GLMER: MIA ARN, DET ALD
+python smaller than GLMER: BOS ALN
+
+composite MIA ARN- 1.06 
+python +.5 glmer +.5 --This was in between the 2 values and was considered to be a tie
+
+composite DET ALD right around 1.0
+GLMER +1 by a somewhat narrow margin
+
+composite Bos ALN- 1.25, matches GLMER very well which is also around 1.25. Troubling that python model has this close to neutral, when all sources consider this an extremely good park for hitters.
+GLMER +1
+
+GLMER model seems to do better in the case of extreme doubles
+
+
+Triple: 
+python larger than GLMER (all over 1.0 difference): SDN HRN, SFN ARN, SFN ARD, KCA ALN, TOR HRD, TOR HRN
+Beta smaller than GLMER (.5 to .6 max): SFN HLN, KCA HLN, COL ALD
+
+composite SDN HRN: all over the place
+triples seem to vary widely, so it is tough to create a composite
+
+- no triple should be over 2.0, set this as cap, but we can't really evaluate since all sources differ widely on triples.
+- no triple should be under 0.5, set this as cap, but we can't really evaluate since all sources differ widely on triples.
+
+Note: looking at the triple pfs wholisticly, it is clear that there are some issues with the python model. Some of the values are above 3, or are extremely low. Overall, the group where python is larger than GLMER are all because the python value iabnormally large(considerably larger than any of the sources used in forming composite pf)
+
+
+HR PFs:
+
+python larger than GLMER: ATL HLN, CHN HRD
+python smaller than GLMER: CHN ARD, NYN HRN
+
+composite ATL HLN: close to 1.0
+GLMER wins, python seems to overestimate by a substantial amount
++1 GLMER
+
+composite CHN HRD: 1.085
++1 GLMER
+
+composite CHN ARD: slightly positive, clear that GLMER value is closer
++1 GLMER
+
+composite NYN HRN: 1.07, matches GLMER exactly. GLMER matches the composite closely on all values checked. This is a good sign.
+
+GLMER wins all cateogries except singles handily. When incorperating latest GLMER regression, single pfs become considerably less extreme and python model no longer outperforms on this test. Overall, it is clear that in the extreme cases GLMER outperforms the python model.
+
+

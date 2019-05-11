@@ -1,0 +1,115 @@
+---
+# THIS IS AN EXAMPLE FILE
+# Copy this format into player_customizations.yaml to customize for real
+#
+# ------------ MODIFYING BATTERS ---------------
+# Put new entry seperated by - for each player that requires custom actions
+# name: Player's name
+#
+# mlb_id:
+#   REQUIRED
+#
+# score_multiplier:
+#   OPTIONAL    If unspecified default is 1.0
+#   To exclude a player set the score_multiplier = 0.0
+#   To force include a player make score multiplier a high number like 1000.0
+#
+# batting_rates:
+#   OPTIONAL    If unspecified batting rates unadjusted
+#   Rates must be fully specified and sum to 1.0
+#   NOTE: These rates are substituted in at the last second so they will not
+#   be adjusted for park or opposing pitcher.
+#   WARNING: This will not affect player's stats against relievers
+#
+# batting_rates_multiplier:
+#   OPTIONAL    If unspecified default is 1.0
+#   This multiplies the specified hit rates (e.g. HR) and then renormalizes
+#   So HR: 5 makes it 5 times as likely for the player to hit a HR
+#   NOTE: These rates are substituted in at the last second so they will not
+#   be adjusted for park or opposing pitcher.
+#   WARNING: This will not affect player's stats against relievers
+#
+# POS:
+#   OPTIONAL    If unspecified default is all positions
+#   To apply only to the batter if they are taken as the specified position
+#   Most useful to lock in players for late player swaps
+#
+#  ------------ MODIFYING TEAM ----------------
+# Put new entry seperated by - for each team that requires custom actions
+#
+# team_id:
+#   REQUIRED
+#
+# hit_rate_multiplier:
+#   OPTIONAL    If unspecified default is 1.0
+#   This multiplies the hit rates (HR, 3B, 2B, 1B) and then renormalizes
+#   So hit_rate_multiplier = 2.0 makes it twice as likely for an on base hit
+#   NOTE: This affects all players on the team and happens after any player
+#   specific adjustments are made
+#   WARNING: This will not affect player's stats against relievers
+#
+# batting_rates_multiplier:
+#   OPTIONAL    If unspecified default is 1.0
+#   This multiplies the specified hit rates (e.g. HR) and then renormalizes
+#   So HR: 5 makes it 5 times as likely for the team to hit a HR
+#   NOTE: These rates are substituted in at the last second so they will not
+#   be adjusted for park or opposing pitcher.
+#   WARNING: This will not affect player's stats against relievers
+#
+# score_multiplier:
+#   OPTIONAL    If unspecified default is 1.0
+#   To exclude a team from consideration (i.e. rainouts) set equal to 0.0
+#   NOTE: score multiplier will be applied after any player specific changes
+#   WARNING: This only affects batters not pitchers
+#
+# bat_hand:
+#  OPTIONAL     If unspecified default is applies to all batters
+#  Specifies if the adjustments apply to only batters of a certain handedness
+#  # TODO: what does this mean about switch hitters
+#
+#
+# -----------/-------------/--------------/--------/
+
+teams:
+- team_id: 'MIN'
+  hit_rate_multiplier: 2.0
+  score_multiplier: 4.0
+  batting_rates_multiplier:
+    HR: 5
+
+- team_id: 'ANA'
+  bat_hand: 'R'
+  score_multiplier: 3
+
+batters:
+- name: 'Nick Markakis'
+  mlb_id: 455976
+  score_multiplier: 7.0
+
+- name: 'Mike Trout'
+  mlb_id: 545361
+  score_multiplier: 10.0
+  POS: 'OF'
+
+- name: 'Donald Lutz'
+  mlb_id: 544371
+  batting_rates:
+    HR: 0.33
+    TRIPLE: .02
+    DOUBLE: .05
+    SINGLE: .15
+    BB: .1
+    HBP: .03
+    SO: 0.15
+    OUT: .17
+  batting_rates_multiplier:
+    HR: .2
+
+- name: 'Evan Longoria'
+  mlb_id: 446334
+  batting_rates_multiplier:
+    HR: .8
+
+- name: 'Random'
+  mlb_id: 123456
+  score_multiplier: 1.0
